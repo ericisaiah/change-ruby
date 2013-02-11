@@ -15,10 +15,13 @@ module Change
         endpoint = resource.endpoint(request_on, action_or_collection)
 
         params[:api_key] = @api_key
+
         if resource.needs_authorization?(method)
           params[:endpoint] = endpoint
           params[:timestamp] = Time.now.utc.iso8601
-          params[:rsig] = generate_rsig(params, resource.auth_key['auth_key'])
+
+          auth_key_to_use = params.delete(:auth_key_to_use)
+          params[:rsig] = generate_rsig(params, auth_key_to_use['auth_key'])
         end
 
         response = send(method.to_s, final_url(endpoint), params)
