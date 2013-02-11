@@ -1,5 +1,7 @@
 # Change.org API Ruby Library Gem
 
+This gem has not yet been released. Stay tuned.
+
 ## Description
 Ruby library for the Change.org API.
 
