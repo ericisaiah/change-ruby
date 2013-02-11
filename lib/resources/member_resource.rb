@@ -42,8 +42,6 @@ module Change
         @properties = response
       end
 
-      #TODO Add method_missing versions to allow to call method by resource collection name
-      # e.g., get_petitions, get_petitions_created, etc.
       def load_collection(collection, params = {})
         response = make_request(:member, { :method => :get, :collection => collection }, params)
         if response.is_a?(Array)

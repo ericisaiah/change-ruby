@@ -1,3 +1,6 @@
+# For local development
+$LOAD_PATH << './lib'
+
 require 'digest/sha2'
 require 'httparty'
 

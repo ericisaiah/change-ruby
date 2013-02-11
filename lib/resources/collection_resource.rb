@@ -22,6 +22,10 @@ module Change
         super(@parent_resource.client, properties)
       end
 
+      def load(params)
+        @parent_resource.load_collection(self.class.collection_name.to_sym, params)
+      end
+
     end
   end
 end
