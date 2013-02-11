@@ -21,6 +21,22 @@ Obtain a Change.org API key and secret token at [change.org/developers](http://w
 
 The full Change.org documentation can be found [on Github here](https://github.com/change/api_docs).
 
+## Features
+
+This gem allows you to interact with all* resources currently available by
+Change.org's API:
+
+- Petitions
+  * Signatures
+  * Targets of the petition ("targets")
+  * Reasons for signing ("reasons")
+  * News updates ("updates")
+- Users
+- Organizations
+  * Petitions created
+
+\* See _TODO_ list at the bottom of this page for resources coming soon.
+
 ## Usage
 
 ### Setup
@@ -120,17 +136,11 @@ That's it! Doing this will use the first auth key by default, and give this
 signature the source specified in that auth key. But you can also specify a
 different one to use by adding it as an argument to `add_signature`.
 
-    petition.add_signature({
-      :email => 'barkley@exampledogs.com',
-      :first_name => 'Barkley',
-      :last_name => 'Dog',
-      :address => '123 Sesame St NW'
-      :city => 'Washington',
-      :state_province => 'DC',
-      :postal_code => '20011',
-      :country_code => 'US'
-    }, petition.auth_keys(3))
+    petition.add_signature(signature_hash, petition.auth_keys(3))
 
 ## TODO
 
+- Add new resource collections:
+  * Petitions signed by a user
+  * Petitions created by a user
 - Have returned properties on resources become attributes on the object, so we can make nice calls like, `petition.signature_count` instead of `petition.properties['signature_count']`
