@@ -4,18 +4,30 @@ module Change
 
       class << self
 
+        # This is the Change.org name for the resource type. It
+        # is automatically derived from the class name.
+        #
+        # @return [String] the name of the resource
         def member_name
           self.name.split('::').last.downcase
         end
 
-        # Overridden for special pluralizations
+        # This is the Change.org pluralized name for the resource type. While it
+        # can be overridden in sub-classes for non-standard English
+        # pluralizations, it is automatically derived from the class name.
+        #
+        # @return [String] the pluralized name of the resource
         def collection_name
           "#{self.name.split('::').last.downcase}s"
         end
 
       end
 
+      # The unique Change.org ID of the resource.
       attr_accessor :id
+
+      # The fields on the resource. The Change.org API documentation has the
+      # full list of fields that may be returned for each resource.
       attr_accessor :properties
 
       def initialize(client, properties = {})
@@ -25,6 +37,11 @@ module Change
 
       # Shared resource requests
 
+      # Retrieves the unique Change.org ID for the current resource by its
+      # resource current URL.
+      #
+      # @param resource_url [String] the current Change.org URL of the resource
+      # @return [Integer] the unique Change.org ID of the resource
       def get_id(resource_url)
         response = make_request(:collection, { :method => :get, :action => :get_id }, { "#{self.class.member_name}_url".to_sym => resource_url })
         response["#{self.class.member_name}_id"]
