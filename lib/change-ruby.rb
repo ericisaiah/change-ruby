@@ -1,5 +1,4 @@
-# For local development
-$LOAD_PATH << './lib'
+# $LOAD_PATH << './lib' # Uncomment to load change-ruby in console without installing gem.
 
 require 'digest/sha2'
 require 'httparty'
