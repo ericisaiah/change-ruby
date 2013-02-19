@@ -7,6 +7,7 @@ module Change
       def initialize(properties = {})
         @api_key = properties.delete(:api_key)
         @secret_token = properties.delete(:secret_token)
+        raise "An API key must be specified." if @api_key.nil?
       end
 
       def request(request_on, request_type, resource, params)
