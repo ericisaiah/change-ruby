@@ -8,6 +8,7 @@ module Change
 
       def add_signature(params = {}, auth_key_to_use = nil)
         auth_key_to_use ||= auth_key
+        raise "No auth key specified." if auth_key_to_use.nil?
         params[:auth_key_to_use] = auth_key_to_use
         params[:source] = auth_key_to_use['source']
         response = make_request(:collection, { :method => :post }, params)

@@ -39,7 +39,6 @@ module Change
 
       def request_auth_key(params)
         response = make_request(:member, { :method => :post, :collection => :auth_keys }, params)
-        puts response
         if response['status'] == 'granted'
           add_new_auth_key(response)
           true
