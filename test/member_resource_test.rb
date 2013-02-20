@@ -33,16 +33,28 @@ describe 'MemberResource' do
       @resource = TesterResource.new(@client)
     end
 
-    describe '#needs_authorization?' do
+    describe '#needs_request_signature?' do
 
       it "should return true for :get" do
-        @resource.needs_authorization?(:get).must_equal false
+        @resource.needs_request_signature?(:get).must_equal false
       end
 
       it "should return false for :post, :put, and :delete" do
-        @resource.needs_authorization?(:post).must_equal true
-        @resource.needs_authorization?(:put).must_equal true
-        @resource.needs_authorization?(:delete).must_equal true
+        @resource.needs_request_signature?(:post).must_equal true
+        @resource.needs_request_signature?(:put).must_equal true
+        @resource.needs_request_signature?(:delete).must_equal true
+      end
+
+    end
+
+    describe '#needs_authorization?' do
+
+      it "should return false for :auth_keys" do
+        @resource.needs_authorization?(:auth_keys).must_equal false
+      end
+
+      it "should return true for no action" do
+        @resource.needs_authorization?.must_equal true
       end
 
     end

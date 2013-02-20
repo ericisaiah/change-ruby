@@ -23,8 +23,12 @@ module Change
         path.prepend('/')
       end
 
-      def needs_authorization?(method)
+      def needs_request_signature?(method)
         method != :get
+      end
+
+      def needs_authorization?(action = nil)
+        action != :auth_keys
       end
 
       def auth_key(key_number = 0)

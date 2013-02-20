@@ -17,12 +17,16 @@ module Change
 
         params[:api_key] = @api_key
 
-        if resource.needs_authorization?(method)
+        if resource.needs_request_signature?(method)
           params[:endpoint] = endpoint
           params[:timestamp] = Time.now.utc.iso8601
 
-          auth_key_to_use = params.delete(:auth_key_to_use)
-          params[:rsig] = generate_rsig(params, auth_key_to_use['auth_key'])
+          if resource.needs_authorization?(action_or_collection)
+            auth_key_to_use = params.delete(:auth_key_to_use) || resource.auth_key
+            params[:rsig] = generate_rsig(params, auth_key_to_use['auth_key'])
+          else
+            params[:rsig] = generate_rsig(params)
+          end
         end
 
         response = send(method.to_s, final_url(endpoint), params)
@@ -57,7 +61,7 @@ module Change
         HTTParty.post(url, { :body => params })
       end
 
-      def generate_rsig(params, auth_key)
+      def generate_rsig(params, auth_key = nil)
         body_to_digest = "#{post_body(params)}#{@secret_token}#{auth_key}"
         Digest::SHA2.hexdigest(body_to_digest)
       end
