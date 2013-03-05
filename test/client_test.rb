@@ -56,6 +56,16 @@ describe 'Client' do
       lambda { @petition.load(1) }.must_raise(Change::Exceptions::ChangeException)
     end
 
+    it "should raise an exception if the response is a server error" do
+      url_to_be_called = 'https://api.change.org/v1/petitions/1'
+      params = { :api_key => @api_key_example }
+      @client.expects(:send)
+        .with('get', url_to_be_called, params)
+        .once
+        .returns(MockResponse.new(500, "<html>You broke me!</html>"))
+      lambda { @petition.load(1) }.must_raise(Change::Exceptions::ChangeException)
+    end
+
   end
 
   describe '#final_url' do
