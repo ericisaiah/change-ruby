@@ -40,7 +40,12 @@ module Change
         when 200, 202
           response.parsed_response
         else
-          messages = response.parsed_response['messages']
+          messages = if response.code == 500
+            ['A server error has occurred.']
+          else
+            response.parsed_response['messages']
+          end
+
           raise ChangeException.new(messages, response.code), messages.join(' '), caller
         end
       end
@@ -71,5 +76,5 @@ module Change
       end
 
     end
-  end  
+  end
 end
