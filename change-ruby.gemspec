@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'change-ruby'
-  s.version     = '1.0.3'
+  s.version     = '1.0.4'
   s.description = 'A Ruby library for the Change.org API.'
   s.authors     = ['Eric Lukoff']
   s.email       = 'eric@ericlukoff.com'
