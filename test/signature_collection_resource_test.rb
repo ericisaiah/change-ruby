@@ -35,7 +35,7 @@ describe 'SignatureCollection' do
 
       before do
         @test_key = 'my_test_key'
-        @parent_resource = Change::Resources::Petition.new(@client, { :auth_key => { 'auth_key' => @test_key } })
+        @parent_resource = Change::Resources::Petition.new(@client, { :id => 1, :auth_key => { 'auth_key' => @test_key } })
         @signature_collection = Change::Resources::SignatureCollection.new(@parent_resource)
       end
 
@@ -58,7 +58,7 @@ describe 'SignatureCollection' do
     describe "when there is no auth key on the parent resource" do
 
       before do
-        @parent_resource = Change::Resources::Petition.new(@client)
+        @parent_resource = Change::Resources::Petition.new(@client, { :id => 1 })
         @signature_collection = Change::Resources::SignatureCollection.new(@parent_resource)
       end
 
