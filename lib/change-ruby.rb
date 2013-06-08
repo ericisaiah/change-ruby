@@ -1,4 +1,5 @@
-# $LOAD_PATH << './lib' # Uncomment to load change-ruby in console without installing gem.
+# Uncomment to load change-ruby in console without installing gem. Then require './lib/change-ruby' in console
+# $LOAD_PATH << './lib'
 
 require 'digest/sha2'
 require 'httparty'

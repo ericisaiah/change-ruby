@@ -38,12 +38,12 @@ module Change
       def deal_with_response(response)
         case response.code
         when 200, 202
-          response.parsed_response
+          ensure_parse(response.parsed_response)
         else
           messages = if response.code == 500
             ['A server error has occurred.']
           else
-            response.parsed_response['messages']
+            ensure_parse(response.parsed_response)['messages']
           end
 
           raise ChangeException.new(messages, response.code), messages.join(' '), caller
@@ -75,6 +75,16 @@ module Change
         HTTParty::HashConversions.to_params(params)
       end
 
+      # Change.org is currently not setting the content-type header
+      # as application/json when it's returning json, let's make sure strings
+      # are parsed as json...until Change.org fixes it.
+      def ensure_parse(supposedly_parsed_object)
+        if supposedly_parsed_object.is_a?(String)
+          HTTParty::Parser.call(supposedly_parsed_object, :json)
+        else
+          supposedly_parsed_object
+        end
+      end
     end
   end
 end

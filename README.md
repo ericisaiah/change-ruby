@@ -121,7 +121,7 @@ multiple, by specifying which one you want to see:
 Once you have an authorization key for a petition, and your `Client` object has
 a secret token specified, you can add signatures to a petition:
 
-    petition.add_signature({
+    petition.signatures.add_signature({
       :email => 'barkley@exampledogs.com',
       :first_name => 'Barkley',
       :last_name => 'Dog',
@@ -136,7 +136,7 @@ That's it! Doing this will use the first auth key by default, and give this
 signature the source specified in that auth key. But you can also specify a
 different one to use by adding it as an argument to `add_signature`.
 
-    petition.add_signature(signature_hash, petition.auth_keys(3))
+    petition.signatures.add_signature(signature_hash, petition.auth_keys(3))
 
 ## TODO
 
