@@ -136,7 +136,7 @@ That's it! Doing this will use the first auth key by default, and give this
 signature the source specified in that auth key. But you can also specify a
 different one to use by adding it as an argument to `add_signature`.
 
-    petition.signatures.add_signature(signature_hash, petition.auth_keys(3))
+    petition.signatures.add_signature(signature_hash, petition.auth_key(3))
 
 ## TODO
 
