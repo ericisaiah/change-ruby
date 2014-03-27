@@ -1,5 +1,7 @@
 # A Change.org API Ruby Library Gem
 
+[![Build Status](https://travis-ci.org/controlshift/change-ruby.svg?branch=master)](https://travis-ci.org/controlshift/change-ruby)
+
 ## Description
 A Ruby library for the Change.org API. This is a personal project and not an official library from Change.org.
 
