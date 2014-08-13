@@ -17,3 +17,4 @@ doc/
 Gemfile.lock
 *.swp
 .rvmrc
+.idea
