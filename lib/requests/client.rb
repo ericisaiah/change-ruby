@@ -3,6 +3,7 @@ module Change
     class Client
       include HTTParty
       include Change::Exceptions
+      ssl_version :TLSv1
 
       def initialize(properties = {})
         @api_key = properties.delete(:api_key)
@@ -59,11 +60,11 @@ module Change
       end
 
       def get(url, params)
-        HTTParty.get(url, { :query => params })
+        HTTParty.get(url, { :query => params, verify: false})
       end
 
       def post(url, params)
-        HTTParty.post(url, { :body => params })
+        HTTParty.post(url, { :body => params, verify: false })
       end
 
       def generate_rsig(params, auth_key = nil)
