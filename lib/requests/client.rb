@@ -47,7 +47,11 @@ module Change
             ensure_parse(response.parsed_response)['messages']
           end
 
-          raise ChangeException.new(messages, response.code), messages.join(' '), caller
+          if messages == ['petition not found']
+            raise PetitionNotFoundException.new(messages, response.code), messages.join(' '), caller
+          else  
+            raise ChangeException.new(messages, response.code), messages.join(' '), caller
+          end  
         end
       end
 

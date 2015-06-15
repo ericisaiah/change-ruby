@@ -14,5 +14,7 @@ module Change
         @messages.first
       end
     end
+
+    class PetitionNotFoundException < ChangeException ; end
   end
 end
