@@ -16,5 +16,6 @@ module Change
     end
 
     class PetitionNotFoundException < ChangeException ; end
+    class CloudflareException < ChangeException ; end
   end
 end

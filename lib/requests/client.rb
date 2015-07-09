@@ -42,12 +42,16 @@ module Change
         else
           messages = if response.code == 500
             ['A server error has occurred.']
+          elsif response.code == 400 && response.parsed_response =~ /cloudflare/
+            ['Bad Request via Cloudflare']
           else
             ensure_parse(response.parsed_response)['messages']
           end
 
           if messages == ['petition not found']
             raise PetitionNotFoundException.new(messages, response.code), messages.join(' '), caller
+          elsif messages == ['Bad Request via Cloudflare']
+            raise CloudflareException.new(messages, response.code), messages.join(' '), caller
           else  
             raise ChangeException.new(messages, response.code), messages.join(' '), caller
           end  
@@ -84,7 +88,11 @@ module Change
       # are parsed as json...until Change.org fixes it.
       def ensure_parse(supposedly_parsed_object)
         if supposedly_parsed_object.is_a?(String)
-          HTTParty::Parser.call(supposedly_parsed_object, :json)
+          begin
+            HTTParty::Parser.call(supposedly_parsed_object, :json)
+          rescue JSON::ParserError
+            {server_response_body: supposedly_parsed_object}
+          end
         else
           supposedly_parsed_object
         end
