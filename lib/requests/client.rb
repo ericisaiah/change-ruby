@@ -91,7 +91,7 @@ module Change
           begin
             HTTParty::Parser.call(supposedly_parsed_object, :json)
           rescue JSON::ParserError
-            {server_response_body: supposedly_parsed_object}
+            {'messages' => [supposedly_parsed_object]}
           end
         else
           supposedly_parsed_object
