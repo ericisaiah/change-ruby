@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.files       = Dir['lib/**/*.rb'] + Dir['test/**/*.rb']
   s.homepage    = 'https://github.com/ericisaiah/change-ruby'
 
-  s.add_runtime_dependency "httparty", ["~> 0.13.1"]
+  s.add_runtime_dependency "httparty", ["> 0.13.1"]
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'mocha'
