@@ -14,5 +14,8 @@ module Change
         @messages.first
       end
     end
+
+    class PetitionNotFoundException < ChangeException ; end
+    class CloudflareException < ChangeException ; end
   end
 end

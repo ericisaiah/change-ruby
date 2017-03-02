@@ -56,6 +56,16 @@ describe 'Client' do
       lambda { @petition.load(1) }.must_raise(Change::Exceptions::ChangeException)
     end
 
+    it "should raise a typed exception if the response indicates the request was not a petition" do
+      url_to_be_called = 'https://api.change.org/v1/petitions/1'
+      params = { :api_key => @api_key_example }
+      @client.expects(:send)
+        .with('get', url_to_be_called, params)
+        .once
+        .returns(MockResponse.new(400, { "result" => "failure", "messages" => [ "petition not found"] }))
+      lambda { @petition.load(1) }.must_raise(Change::Exceptions::PetitionNotFoundException)
+    end
+
     it "should raise an exception if the response is a server error" do
       url_to_be_called = 'https://api.change.org/v1/petitions/1'
       params = { :api_key => @api_key_example }
@@ -64,6 +74,16 @@ describe 'Client' do
         .once
         .returns(MockResponse.new(500, "<html>You broke me!</html>"))
       lambda { @petition.load(1) }.must_raise(Change::Exceptions::ChangeException)
+    end
+
+    it "should raise an exception if the response is a cloud flare error" do
+      url_to_be_called = 'https://api.change.org/v1/petitions/1'
+      params = { :api_key => @api_key_example }
+      @client.expects(:send)
+        .with('get', url_to_be_called, params)
+        .once
+        .returns(MockResponse.new(400, "<hr><center>cloudflare-nginx</center>"))
+      lambda { @petition.load(1) }.must_raise(Change::Exceptions::CloudflareException)
     end
 
   end
